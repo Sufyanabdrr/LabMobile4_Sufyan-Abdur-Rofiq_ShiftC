@@ -25,7 +25,26 @@ Tugas 4 Praktikum Mobile
 
 ![image](https://github.com/user-attachments/assets/abc38b02-8cb7-4526-a4bc-f6f7077490ed)
 
-$). Screenshot produk_form.dart :
+4). Screenshot produk_form.dart :
+
+![image](https://github.com/user-attachments/assets/3a5368e0-acb2-4768-84a1-f9c33a93a851)
+
+![image](https://github.com/user-attachments/assets/eb4ebc04-0156-4892-a956-9455ed3124e8)
+
+5). Screenshot detail_produk.dart :
+
+![image](https://github.com/user-attachments/assets/15502542-ed95-4c13-9729-056a55f5ee01)
+
+![image](https://github.com/user-attachments/assets/ece1f2a8-5beb-46d6-a3ef-2b58eee21262)
+
+![image](https://github.com/user-attachments/assets/676c894a-9d77-46b1-8e2e-5fe9e71630a1)
+
+
+
+
+
+
+
 
 
 
