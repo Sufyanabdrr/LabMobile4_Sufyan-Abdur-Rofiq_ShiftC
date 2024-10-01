@@ -13,3 +13,8 @@ Tugas 4 Praktikum Mobile
 
 ![image](https://github.com/user-attachments/assets/135c2c7c-b7f0-49a4-8265-7d04f0f8de63)
 
+2). Screenshot registrasi_page.dart :
+
+![image](https://github.com/user-attachments/assets/17a64306-b3ab-4073-958b-e6d518c4cb72)
+
+![image](https://github.com/user-attachments/assets/f315908d-eb78-4b77-9d62-6621b038f060)
