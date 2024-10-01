@@ -37,7 +37,7 @@ class _ProdukFormState extends State<ProdukForm> {
             widget.produk!.hargaProduk.toString();
       });
     } else {
-      judul = "Ubah Produk Sufyan Abdur Rofiq || H1D022004";
+      judul = "Tambah Produk Sufyan Abdur Rofiq || H1D022004";
       tombolSubmit = "Simpan";
     }
   }
@@ -64,7 +64,7 @@ class _ProdukFormState extends State<ProdukForm> {
                 children: [
                   // Menambahkan Judul
                   const Text(
-                    "Ubah Produk di Toko Sufyan",
+                    "Tambah Produk di Toko Sufyan",
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
