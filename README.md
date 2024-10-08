@@ -5,7 +5,7 @@ NIM     : H1D022004
 Shift Baru  : C
 Shift Lama  : B
 
-Tugas 4 Praktikum Mobile
+Tugas 4 Praktikum Mobile :
 
 1). Screenshot login_page.dart :
 
@@ -42,6 +42,33 @@ Tugas 4 Praktikum Mobile
 # Praktikum Pemrograman Mobile Pertemuan 5
 
 Tugas 5 Praktikum Mobile :
+
+# Screenshot Tampilan UI dan Penjelasan Kode Proses Aplikasi :
+
+1). Halaman login_page.dart :
+Halaman yang berisi proses login user setelah berhasil melakukan registrasi
+
+![image](https://github.com/user-attachments/assets/4dece7ca-471b-4cb3-99aa-e1d36dd94a1c)
+
+![image](https://github.com/user-attachments/assets/45377e17-602c-41c7-ab71-96b5973a8feb)
+
+Pengguna melakukan login dengan memasukkan alamat email dan kata sandi pada form login yang tersedia. Alamat email dan kata sandi yang dimasukkan adalah yang telah didaftarkan sebelumnya melalui proses registrasi. Jika pengguna memasukkan data yang benar, setelah menekan tombol login, mereka akan diarahkan ke halaman Daftar Produk. Namun, jika pengguna salah memasukkan data atau belum melengkapi form, hasilnya akan tampil seperti ini :
+
+![image](https://github.com/user-attachments/assets/4ea6e11f-788f-45be-a650-20cd3827671a)
+
+![image](https://github.com/user-attachments/assets/02017c2a-a0ef-4a03-ac7e-2b66476ed326)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
