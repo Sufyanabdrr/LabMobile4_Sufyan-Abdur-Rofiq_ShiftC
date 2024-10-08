@@ -65,6 +65,7 @@ Berikut adalah potongan kode yang mengatur proses login dengan menampilkan statu
 ![image](https://github.com/user-attachments/assets/52aa5423-2f53-4049-8e84-167c84285113)
 
 2). Halaman registrasi_page.dart :
+
 Halaman yang berisi proses registrasi pengguna sebelum login ke aplikasi.
 Sebelum melakukan Login, pengguna yang belum memiliki akun dapat melakukan Registrasi terlebih dahulu dengan mengklik opsi "registrasi" di halaman Login.
 
@@ -81,6 +82,80 @@ Namun, jika pengguna menekan tombol registrasi tanpa mengisi kolom yang diperluk
 ![image](https://github.com/user-attachments/assets/f9e902c2-f140-42ea-b699-00d393b9815f)
 
 ![image](https://github.com/user-attachments/assets/db79ec22-354e-4ed6-9c5c-2211050bf4d5)
+
+Berikut adalah potongan kode yang mengatur proses registrasi, termasuk menampilkan indikator loading selama proses berlangsung, menampilkan pesan sukses jika registrasi berhasil, serta menampilkan pesan kesalahan jika registrasi gagal :
+
+![image](https://github.com/user-attachments/assets/bf768299-5db9-435f-bc5e-7461cae576c2)
+
+3). Halaman produk_page.dart :
+
+![image](https://github.com/user-attachments/assets/8d015961-a893-4ba7-b83e-27b7f694ae4f)
+
+Di halaman daftar produk, terdapat tampilan daftar produk yang diambil dari database, masing-masing disajikan dalam kartu terpisah. Pengguna dapat menekan ikon "+" di pojok kanan atas untuk mengakses halaman tambah produk. Selain itu, pengguna juga bisa membuka sidemenu dengan mengklik ikon garis tiga di pojok kiri atas halaman.
+
+Berikut adalah potongan kode yang digunakan untuk menampilkan daftar produk. Kelas ListProduk berfungsi untuk menampilkan daftar produk secara dinamis dengan memanfaatkan widget ListView.builder. Jika daftar kosong atau null, maka tidak ada item yang akan ditampilkan. Setiap elemen dalam daftar tersebut diubah menjadi widget ItemProduk yang menunjukkan rincian produk tertentu :
+
+![image](https://github.com/user-attachments/assets/4287bebe-9755-46c8-a065-acdc0dc31149)
+
+Di bawah ini adalah potongan kode yang digunakan untuk membuat kartu daftar produk. Kelas ItemProduk bertanggung jawab untuk menampilkan informasi produk dalam format kartu, yang mencakup ikon produk, nama produk, dan harga produk. Saat pengguna mengetuk kartu tersebut, aplikasi akan mengarahkan mereka ke halaman detail produk menggunakan Navigator.push :
+
+![image](https://github.com/user-attachments/assets/4173faa2-c643-42a6-86f4-cfc668188ea2)
+
+![image](https://github.com/user-attachments/assets/4ebbb3be-27fd-4d90-a492-9b8652ec10d0)
+
+4). Halaman Side Menu pada produk_page.dart :
+
+![image](https://github.com/user-attachments/assets/db0cdf86-0fbf-485d-9309-66c38b7ccd2a)
+
+Pada sidemenu terdapat opsi untuk melakukan logout. Ketika pengguna memilih untuk logout, mereka akan diarahkan kembali ke halaman Login dan sesi pengguna akan dihentikan.
+
+Di bawah ini adalah potongan kode yang menampilkan sebuah Drawer dengan judul "Toko Sufyan" dan sebuah menu ListTile untuk melakukan logout, yang akan mengarahkan pengguna kembali ke halaman login setelah proses logout berhasil :
+
+![image](https://github.com/user-attachments/assets/f31ef974-adee-4244-b885-a35d40fe26f2)
+
+5). Halaman Tambah Produk pada produk_form.dart :
+
+Di halaman Tambah Produk, pengguna dapat memasukkan data produk untuk disimpan dalam database dengan mengisi formulir yang mencakup kolom untuk kode produk, nama produk, dan harga.
+
+![image](https://github.com/user-attachments/assets/328213c0-0b14-4948-981d-fe1aceea22ec)
+
+![image](https://github.com/user-attachments/assets/63ac11c7-3ecb-46ca-ad06-1f6ebfbd69ab)
+
+Setelah pengguna mengisi formulir tambah produk dan menekan tombol Simpan, mereka akan secara otomatis diarahkan ke halaman Daftar Produk jika data yang dimasukkan valid.
+
+Berikut adalah halaman Daftar Produk setelah pengguna menambah produk "Knalpot Austin Racing" :
+
+![image](https://github.com/user-attachments/assets/df749b48-2ca7-4260-889a-16c71d990ced)
+
+Berikut adalah baris kode untuk menyimpan data produk baru. Fungsi simpan() bertugas mengumpulkan data produk dari formulir input, mengirimkan data tersebut untuk disimpan melalui ProdukBloc, menangani kesalahan jika proses gagal, serta memperbarui status antarmuka pengguna, termasuk indikator loading. Setelah proses berhasil, pengguna akan diarahkan ke halaman produk yang menampilkan daftar produk yang telah disimpan :
+
+![image](https://github.com/user-attachments/assets/93a0eb93-780a-4430-8353-491dc8f1ec42)
+
+6). Halaman 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
