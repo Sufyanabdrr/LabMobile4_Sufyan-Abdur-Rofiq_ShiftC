@@ -131,7 +131,53 @@ Berikut adalah baris kode untuk menyimpan data produk baru. Fungsi simpan() bert
 
 ![image](https://github.com/user-attachments/assets/93a0eb93-780a-4430-8353-491dc8f1ec42)
 
-6). Halaman 
+6). Halaman produk_detail.dart :
+
+![image](https://github.com/user-attachments/assets/d645bf3f-e8b6-43ff-b1e0-7140edb64594)
+
+Pengguna dapat mengakses halaman Detail Produk dengan menekan salah satu produk yang ada di halaman Daftar Produk. Di halaman Detail Produk, informasi mengenai produk ditampilkan, termasuk kode, nama produk, dan harga produk. Selain itu, terdapat tombol "Edit" dan tombol "Hapus".
+
+7). Halaman Ubah Produk pada produk_form.dart :
+
+![image](https://github.com/user-attachments/assets/a5c5679f-a37c-4277-b024-11a7fb13cfb0)
+
+Pengguna dapat membuka halaman Ubah Produk dengan menekan tombol "Edit" di halaman Detail Produk. Di halaman ini, pengguna dapat memperbarui informasi produk dengan mengedit form yang berisi data produk dengan informasi baru, lalu menekan tombol "Ubah". Jika data baru yang dimasukkan valid, proses pengeditan akan berhasil, dan pengguna akan secara otomatis diarahkan kembali ke halaman Daftar Produk.
+
+Sebagai contoh, setelah harga produk diubah, informasi tersebut akan diperbarui di halaman Daftar Produk, seperti yang ditunjukkan dalam gambar di bawah:
+
+![image](https://github.com/user-attachments/assets/dac18707-6906-460a-97eb-950e50b79601)
+
+![image](https://github.com/user-attachments/assets/0fa1fcec-e69e-4543-9c2d-5d51598ea8d3)
+
+Berikut adalah kode untuk proses pengubahan data produk. Fungsi ubah() bertugas untuk memperbarui informasi produk yang sudah ada. Fungsi ini mengumpulkan data dari form input, memperbarui produk melalui ProdukBloc, serta menangani berbagai kemungkinan hasil, seperti keberhasilan dan kegagalan, sambil memastikan status loading dikelola dengan baik. Setelah produk berhasil diperbarui, pengguna akan diarahkan kembali ke halaman daftar produk :
+
+![image](https://github.com/user-attachments/assets/e19781cc-c1f3-4ebe-a216-84306ffb515f)
+
+8). Halaman Hapus Produk pada produk_detai.dart :
+
+![image](https://github.com/user-attachments/assets/62373972-aebe-4714-a934-c88862cb5ff4)
+
+Untuk menghapus data produk, pengguna harus menekan tombol "Delete" yang terdapat di halaman Detail Produk. Setelah tombol tersebut ditekan, akan muncul notifikasi untuk mengonfirmasi tindakan penghapusan data produk. Jika pengguna memilih "Ya", maka data produk akan dihapus dari database. Sebaliknya, jika pengguna memilih "Batal", proses penghapusan tidak akan dilanjutkan dan data produk tetap ada.
+
+Berikut adalah kode untuk proses penghapusan data produk. Fungsi confirmHapus() menampilkan dialog konfirmasi yang meminta pengguna untuk memastikan tindakan penghapusan produk. Jika pengguna memilih "Ya", produk akan dihapus melalui ProdukBloc, dan setelah berhasil, pengguna akan diarahkan kembali ke halaman daftar produk. Jika terjadi kesalahan, akan muncul dialog peringatan. Tombol "Batal" memberikan opsi bagi pengguna untuk membatalkan penghapusan tanpa melakukan perubahan apapun :
+
+![image](https://github.com/user-attachments/assets/86ed6088-6dd8-49aa-a91d-c869c96d25ed)
+
+![image](https://github.com/user-attachments/assets/941de144-0748-47aa-8a6a-e4dcbab0c554)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
