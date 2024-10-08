@@ -38,13 +38,8 @@ class _ProdukFormState extends State<ProdukForm> {
             widget.produk!.hargaProduk.toString();
       });
     } else {
-<<<<<<< HEAD
       judul = "TAMBAH PRODUK SUFYAN ABDUR ROFIQ | H1D022004";
       tombolSubmit = "SIMPAN";
-=======
-      judul = "Tambah Produk Sufyan Abdur Rofiq || H1D022004";
-      tombolSubmit = "Simpan";
->>>>>>> b51deefd4ba3c4212ab99a1e26bb883f708acc07
     }
   }
 
@@ -53,9 +48,8 @@ class _ProdukFormState extends State<ProdukForm> {
     return Scaffold(
       appBar: AppBar(
         title: Text(judul),
-        backgroundColor: Colors.red[700],
+        backgroundColor: Colors.red[700], // Ubah menjadi merah
       ),
-<<<<<<< HEAD
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -71,38 +65,6 @@ class _ProdukFormState extends State<ProdukForm> {
                 const SizedBox(height: 24),
                 _buttonSubmit()
               ],
-=======
-      body: Container(
-        color:
-            const Color.fromARGB(255, 255, 229, 180), // Warna emas khas Marvel
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  // Menambahkan Judul
-                  const Text(
-                    "Tambah Produk di Toko Sufyan",
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.red, // Warna teks merah khas Marvel
-                    ),
-                    textAlign: TextAlign.center, // Rata tengah
-                  ),
-                  const SizedBox(height: 20), // Jarak antara judul dan textbox
-                  _kodeProdukTextField(),
-                  const SizedBox(height: 10), // Jarak antara field
-                  _namaProdukTextField(),
-                  const SizedBox(height: 10), // Jarak antara field
-                  _hargaProdukTextField(),
-                  const SizedBox(height: 20), // Jarak sebelum tombol
-                  _buttonSubmit(),
-                ],
-              ),
->>>>>>> b51deefd4ba3c4212ab99a1e26bb883f708acc07
             ),
           ),
         ),
@@ -171,7 +133,7 @@ class _ProdukFormState extends State<ProdukForm> {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.all(16),
-          backgroundColor: Colors.red[700],
+          backgroundColor: Colors.red[700], // Ubah menjadi merah
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         ),
