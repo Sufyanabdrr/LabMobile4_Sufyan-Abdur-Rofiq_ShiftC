@@ -46,7 +46,7 @@ Tugas 5 Praktikum Mobile :
 # Screenshot Tampilan UI dan Penjelasan Kode Proses Aplikasi :
 
 1). Halaman login_page.dart :
-Halaman yang berisi proses login user setelah berhasil melakukan registrasi
+Halaman yang berisi proses login pengguna setelah berhasil melakukan registrasi
 
 ![image](https://github.com/user-attachments/assets/4dece7ca-471b-4cb3-99aa-e1d36dd94a1c)
 
@@ -63,6 +63,28 @@ Berikut adalah potongan kode yang mengatur proses login dengan menampilkan statu
 ![image](https://github.com/user-attachments/assets/0add8a12-45b8-4db6-86cb-bb3844461890)
 
 ![image](https://github.com/user-attachments/assets/52aa5423-2f53-4049-8e84-167c84285113)
+
+2). Halaman registrasi_page.dart :
+Halaman yang berisi proses registrasi pengguna sebelum login ke aplikasi.
+Sebelum melakukan Login, pengguna yang belum memiliki akun dapat melakukan Registrasi terlebih dahulu dengan mengklik opsi "registrasi" di halaman Login.
+
+Pada halaman registrasi, pengguna dapat membuat akun baru dengan mengisi form registrasi yang berisi kolom nama/username, alamat email, password, dan konfirmasi password :
+
+![image](https://github.com/user-attachments/assets/ad27dcbc-bcce-47e3-9181-a9d9b0516c35)
+
+Jika pengguna berhasil melakukan registrasi dan menekan tombol Registrasi, akan muncul notifikasi yang menandakan bahwa proses registrasi telah berhasil. Selanjutnya, pengguna akan diarahkan ke halaman Login untuk melakukan login :
+
+![image](https://github.com/user-attachments/assets/04799b63-fcff-4f6f-85c3-91f2a9e02525)
+
+Namun, jika pengguna menekan tombol registrasi tanpa mengisi kolom yang diperlukan atau jika terjadi kesalahan dalam mengisi kolom konfirmasi password, maka akan muncul tampilan seperti ini :
+
+![image](https://github.com/user-attachments/assets/f9e902c2-f140-42ea-b699-00d393b9815f)
+
+![image](https://github.com/user-attachments/assets/db79ec22-354e-4ed6-9c5c-2211050bf4d5)
+
+
+
+
 
 
 
