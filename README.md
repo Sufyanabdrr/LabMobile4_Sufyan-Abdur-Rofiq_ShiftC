@@ -60,60 +60,9 @@ Pengguna melakukan login dengan memasukkan alamat email dan kata sandi pada form
 
 Berikut adalah potongan kode yang mengatur proses login dengan menampilkan status loading, memvalidasi hasil login, menyimpan token dan ID pengguna jika login berhasil, serta menampilkan pesan kesalahan jika login gagal :
 
-void _submit() {
-    _formKey.currentState!.save();
-    setState(() {
-      _isLoading = true;
-    });
-    LoginBloc.login(
-            email: _emailTextboxController.text,
-            password: _passwordTextboxController.text)
-        .then((value) async {
-      if (value.code == 200) {
-        await UserInfo().setToken(value.token.toString());
-        await UserInfo().setUserID(int.parse(value.userID.toString()));
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const ProdukPage()));
-      } else {
-        showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (BuildContext context) => const WarningDialog(
-                  description: "Login gagal, silahkan coba lagi",
-                ));
-      }
-    }, onError: (error) {
-      print(error);
-      showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (BuildContext context) => const WarningDialog(
-                description: "Login gagal, silahkan coba lagi",
-              ));
-    });
-    setState(() {
-      _isLoading = false;
-    });
-  }
+![image](https://github.com/user-attachments/assets/0add8a12-45b8-4db6-86cb-bb3844461890)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+![image](https://github.com/user-attachments/assets/52aa5423-2f53-4049-8e84-167c84285113)
 
 
 
