@@ -1,140 +1,143 @@
 import 'package:flutter/material.dart';
+import 'package:tokokita/bloc/produk_bloc.dart';
 import 'package:tokokita/model/produk.dart';
 import 'package:tokokita/ui/produk_form.dart';
+import 'package:tokokita/ui/produk_page.dart';
+import 'package:tokokita/widget/warning_dialog.dart';
 
+//ignore: must_be_immutable
 class ProdukDetail extends StatefulWidget {
   Produk? produk;
-
-  ProdukDetail({super.key, this.produk});
-
+  ProdukDetail({Key? key, this.produk}) : super(key: key);
   @override
   _ProdukDetailState createState() => _ProdukDetailState();
 }
 
 class _ProdukDetailState extends State<ProdukDetail> {
-  // Style yang sama untuk Kode, Nama, dan Harga
-  final TextStyle detailTextStyle = const TextStyle(
-    fontSize: 20.0,
-    fontWeight: FontWeight.bold, // Gaya tebal
-    color: Colors.red, // Warna teks merah Marvel
-    fontFamily: 'Roboto', // Font keluarga yang sama
-  );
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.red[900], // Warna merah khas Marvel
-        title: const Text(
-          'Detail Produk Sufyan Abdur Rofiq || H1D022004',
-          style: TextStyle(color: Colors.white), // Teks putih
-        ),
+        title: const Text('Detail Produk Sufyan Abdur Rofiq | H1D022004'),
+        backgroundColor: Colors.red[700],
       ),
-      body: Container(
-        color:
-            const Color.fromARGB(255, 255, 229, 180), // Warna emas khas Marvel
+      body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Kode : ${widget.produk!.kodeProduk}",
-              style: detailTextStyle, // Menggunakan style yang sama
-            ),
-            const SizedBox(height: 10), // Jarak antar teks
-            Text(
-              "Nama : ${widget.produk!.namaProduk}",
-              style: detailTextStyle, // Menggunakan style yang sama
-            ),
-            const SizedBox(height: 10), // Jarak antar teks
-            Text(
-              "Harga : Rp. ${widget.produk!.hargaProduk.toString()}",
-              style: detailTextStyle, // Menggunakan style yang sama
-            ),
-            const SizedBox(height: 20), // Jarak sebelum tombol
-            _tombolHapusEdit(),
-          ],
+        child: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Kode : ${widget.produk!.kodeProduk}",
+                style: const TextStyle(
+                    fontSize: 20.0, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                "Nama : ${widget.produk!.namaProduk}",
+                style: const TextStyle(fontSize: 18.0),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                "Harga : Rp. ${widget.produk!.hargaProduk.toString()}",
+                style: const TextStyle(fontSize: 18.0),
+              ),
+              const SizedBox(height: 30),
+              _tombolHapusEdit(),
+            ],
+          ),
         ),
       ),
     );
   }
 
+  // Membuat Tombol Hapus/Edit
   Widget _tombolHapusEdit() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisSize: MainAxisSize.min,
       children: [
         // Tombol Edit
-        Expanded(
-          child: OutlinedButton(
-            style: OutlinedButton.styleFrom(
-              backgroundColor: Colors.red[900], // Warna tombol merah Marvel
-              foregroundColor: Colors.white, // Teks putih
-              padding: const EdgeInsets.symmetric(vertical: 12),
-            ),
-            child: const Text("EDIT",
-                style: TextStyle(fontWeight: FontWeight.bold)),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ProdukForm(
-                    produk: widget.produk!,
-                  ),
-                ),
-              );
-            },
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+            backgroundColor: Colors.red[600],
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           ),
+          child: const Text("EDIT", style: TextStyle(color: Colors.white)),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProdukForm(produk: widget.produk!),
+              ),
+            );
+          },
         ),
-        const SizedBox(width: 10),
-        // Tombol Hapus
-        Expanded(
-          child: OutlinedButton(
-            style: OutlinedButton.styleFrom(
-              backgroundColor:
-                  Colors.red[700], // Warna merah untuk tombol hapus
-              foregroundColor: Colors.white, // Teks putih
-              padding: const EdgeInsets.symmetric(vertical: 12),
-            ),
-            child: const Text("DELETE",
-                style: TextStyle(fontWeight: FontWeight.bold)),
-            onPressed: () => confirmHapus(),
+        const SizedBox(width: 16),
+        // Tombol Delete
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+            backgroundColor: Colors.red,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           ),
+          child: _isLoading
+              ? const CircularProgressIndicator(color: Colors.white)
+              : const Text("DELETE", style: TextStyle(color: Colors.white)),
+          onPressed: _isLoading ? null : () => confirmHapus(),
         ),
       ],
     );
   }
 
+  // Fungsi untuk konfirmasi hapus
   void confirmHapus() {
     AlertDialog alertDialog = AlertDialog(
-      backgroundColor: Colors.red[50], // Latar belakang dialog
-      content: const Text(
-        "Yakin ingin menghapus data ini?",
-        style: TextStyle(color: Colors.black), // Teks hitam
-      ),
+      content: const Text("Yakin ingin menghapus data ini?"),
       actions: [
         // Tombol hapus
-        OutlinedButton(
-          style: OutlinedButton.styleFrom(
-            backgroundColor: Colors.red[900], // Tombol merah khas Marvel
-            foregroundColor: Colors.white, // Teks putih
-          ),
-          child: const Text("Ya"),
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+          child: const Text("Ya", style: TextStyle(color: Colors.white)),
           onPressed: () {
-            // Logika untuk menghapus produk
+            setState(() {
+              _isLoading = true;
+            });
+            ProdukBloc.deleteProduk(id: int.parse(widget.produk!.id!)).then(
+              (value) {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => const ProdukPage(),
+                  ),
+                );
+              },
+              onError: (error) {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) => const WarningDialog(
+                    description: "Hapus gagal, silahkan coba lagi",
+                  ),
+                );
+              },
+            ).whenComplete(() {
+              setState(() {
+                _isLoading = false;
+              });
+            });
           },
         ),
         // Tombol batal
-        OutlinedButton(
-          style: OutlinedButton.styleFrom(
-            backgroundColor: Colors.grey, // Tombol batal dengan warna abu-abu
-            foregroundColor: Colors.white, // Teks putih
-          ),
-          child: const Text("Batal"),
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(backgroundColor: Colors.grey),
+          child: const Text("Batal", style: TextStyle(color: Colors.white)),
           onPressed: () => Navigator.pop(context),
-        )
+        ),
       ],
     );
-
-    showDialog(builder: (context) => alertDialog, context: context);
+    showDialog(context: context, builder: (context) => alertDialog);
   }
 }

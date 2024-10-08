@@ -1,33 +1,17 @@
 import 'package:flutter/material.dart';
-
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Toko Sufyan',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const RegistrasiPage(),
-    );
-  }
-}
+import 'package:tokokita/bloc/registrasi_bloc.dart';
+import 'package:tokokita/widget/success_dialog.dart';
+import 'package:tokokita/widget/warning_dialog.dart';
 
 class RegistrasiPage extends StatefulWidget {
   const RegistrasiPage({Key? key}) : super(key: key);
-
   @override
   _RegistrasiPageState createState() => _RegistrasiPageState();
 }
 
 class _RegistrasiPageState extends State<RegistrasiPage> {
   final _formKey = GlobalKey<FormState>();
+  bool _isLoading = false;
   final _namaTextboxController = TextEditingController();
   final _emailTextboxController = TextEditingController();
   final _passwordTextboxController = TextEditingController();
@@ -35,68 +19,39 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.lightBlue[50],
       appBar: AppBar(
-        backgroundColor: Colors.red[900], // Warna merah khas Marvel
-        title: const Text(
-          "Registrasi Sufyan Abdur Rofiq || H1D022004",
-          style: TextStyle(color: Colors.white), // Teks putih
-        ),
-        centerTitle: false, // Pastikan judul tetap di kiri
+        title: const Text("Registrasi Sufyan Abdur Rofiq | H1D022004"),
+        backgroundColor: Colors.red[700],
       ),
-      body: Container(
-        color:
-            const Color.fromARGB(255, 255, 229, 180), // Warna emas khas Marvel
+      body: Center(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const SizedBox(height: 20),
-                  const Text(
-                    "Toko Sufyan",
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.red, // Warna merah khas Marvel
-                    ),
+            padding: const EdgeInsets.all(16.0),
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              elevation: 8,
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      _namaTextField(),
+                      const SizedBox(height: 20),
+                      _emailTextField(),
+                      const SizedBox(height: 20),
+                      _passwordTextField(),
+                      const SizedBox(height: 20),
+                      _passwordKonfirmasiTextField(),
+                      const SizedBox(height: 30),
+                      _buttonRegistrasi(),
+                    ],
                   ),
-                  const SizedBox(height: 20),
-                  Image.network(
-                    'https://example.com/marvel_background.jpg', // Gambar bertema Marvel
-                    height: 150,
-                    errorBuilder: (BuildContext context, Object exception,
-                        StackTrace? stackTrace) {
-                      return const Icon(
-                        Icons
-                            .error, // Tampilkan ikon error jika gagal memuat gambar
-                        size: 150,
-                        color: Colors.red,
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 20),
-                  const Text(
-                    "Formulir Registrasi Pelanggan Toko Sufyan",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.red, // Warna merah
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  _namaTextField(),
-                  const SizedBox(height: 10),
-                  _emailTextField(),
-                  const SizedBox(height: 10),
-                  _passwordTextField(),
-                  const SizedBox(height: 10),
-                  _passwordKonfirmasiTextField(),
-                  const SizedBox(height: 20),
-                  _buttonRegistrasi(),
-                ],
+                ),
               ),
             ),
           ),
@@ -108,17 +63,12 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
   // Membuat Textbox Nama
   Widget _namaTextField() {
     return TextFormField(
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         labelText: "Nama",
-        hintText: "Registrasi Sufyan Abdur Rofiq",
-        labelStyle:
-            TextStyle(color: Colors.red), // Label warna merah khas Marvel
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.red), // Border merah saat fokus
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.black), // Border hitam default
-        ),
+        prefixIcon: Icon(Icons.person, color: Colors.red[700]),
       ),
       keyboardType: TextInputType.text,
       controller: _namaTextboxController,
@@ -131,19 +81,15 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
     );
   }
 
-  // Membuat Textbox Email
+  // Membuat Textbox email
   Widget _emailTextField() {
     return TextFormField(
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         labelText: "Email",
-        hintText: "Registrasi Sufyan Abdur Rofiq",
-        labelStyle: TextStyle(color: Colors.red), // Label warna merah
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.red), // Border merah saat fokus
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.black), // Border hitam default
-        ),
+        prefixIcon: Icon(Icons.email, color: Colors.red[700]),
       ),
       keyboardType: TextInputType.emailAddress,
       controller: _emailTextboxController,
@@ -162,22 +108,16 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
     );
   }
 
-  // Membuat Textbox Password
+  // Membuat Textbox password
   Widget _passwordTextField() {
     return TextFormField(
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         labelText: "Password",
-        hintText: "Registrasi Sufyan Abdur Rofiq",
-        labelStyle:
-            TextStyle(color: Colors.red), // Label warna merah khas Marvel
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.red), // Border merah saat fokus
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.black), // Border hitam default
-        ),
+        prefixIcon: Icon(Icons.lock, color: Colors.red[700]),
       ),
-      keyboardType: TextInputType.text,
       obscureText: true,
       controller: _passwordTextboxController,
       validator: (value) {
@@ -189,21 +129,16 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
     );
   }
 
-  // Membuat Textbox Konfirmasi Password
+  // Membuat textbox Konfirmasi Password
   Widget _passwordKonfirmasiTextField() {
     return TextFormField(
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         labelText: "Konfirmasi Password",
-        hintText: "Registrasi Sufyan Abdur Rofiq",
-        labelStyle: TextStyle(color: Colors.red), // Label warna merah
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.red), // Border merah saat fokus
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.black), // Border hitam default
-        ),
+        prefixIcon: Icon(Icons.lock, color: Colors.red[700]),
       ),
-      keyboardType: TextInputType.text,
       obscureText: true,
       validator: (value) {
         if (value != _passwordTextboxController.text) {
@@ -214,25 +149,65 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
     );
   }
 
-  // Membuat Tombol Registrasi dengan tema Marvel
+  // Membuat Tombol Registrasi
   Widget _buttonRegistrasi() {
-    return ElevatedButton(
-      child: const Text("Registrasi"),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.red, // Warna merah khas Marvel
-        textStyle: const TextStyle(
-          color: Colors.white, // Teks putih
-          fontWeight: FontWeight.bold,
-          fontSize: 18,
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.red[700],
+          padding: const EdgeInsets.symmetric(vertical: 15.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
         ),
-        padding: const EdgeInsets.symmetric(vertical: 20),
+        child: _isLoading
+            ? const CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              )
+            : const Text(
+                "Registrasi",
+                style: TextStyle(fontSize: 18),
+              ),
+        onPressed: () {
+          var validate = _formKey.currentState!.validate();
+          if (validate) {
+            if (!_isLoading) _submit();
+          }
+        },
       ),
-      onPressed: () {
-        var validate = _formKey.currentState!.validate();
-        if (validate) {
-          // Lakukan sesuatu saat form valid
-        }
-      },
     );
+  }
+
+  void _submit() {
+    _formKey.currentState!.save();
+    setState(() {
+      _isLoading = true;
+    });
+    RegistrasiBloc.registrasi(
+            nama: _namaTextboxController.text,
+            email: _emailTextboxController.text,
+            password: _passwordTextboxController.text)
+        .then((value) {
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) => SuccessDialog(
+                description: "Registrasi berhasil, silahkan login",
+                okClick: () {
+                  Navigator.pop(context);
+                },
+              ));
+    }, onError: (error) {
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) => const WarningDialog(
+                description: "Registrasi gagal, silahkan coba lagi",
+              ));
+    });
+    setState(() {
+      _isLoading = false;
+    });
   }
 }

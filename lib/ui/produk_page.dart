@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:tokokita/bloc/logout_bloc.dart';
+import 'package:tokokita/bloc/produk_bloc.dart';
 import 'package:tokokita/model/produk.dart';
+import 'package:tokokita/ui/login_page.dart';
 import 'package:tokokita/ui/produk_detail.dart';
 import 'package:tokokita/ui/produk_form.dart';
 
 class ProdukPage extends StatefulWidget {
-  const ProdukPage({super.key});
-
+  const ProdukPage({Key? key}) : super(key: key);
   @override
   _ProdukPageState createState() => _ProdukPageState();
 }
@@ -15,17 +17,13 @@ class _ProdukPageState extends State<ProdukPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.red[900], // Warna merah khas Marvel
-        title: const Text(
-          'List Produk Sufyan Abdur Rofiq || H1D022004',
-          style: TextStyle(color: Colors.white), // Teks putih
-        ),
+        title: const Text('List Produk Sufyan Abdur Rofiq | H1D022004'),
+        backgroundColor: Colors.red[700],
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 20.0),
             child: GestureDetector(
-              child: const Icon(Icons.add,
-                  size: 26.0, color: Colors.white), // Ikon putih
+              child: const Icon(Icons.add, size: 26.0, color: Colors.white),
               onTap: () async {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => ProdukForm()));
@@ -35,73 +33,71 @@ class _ProdukPageState extends State<ProdukPage> {
         ],
       ),
       drawer: Drawer(
-        backgroundColor: Colors.red[900], // Warna drawer merah khas Marvel
         child: ListView(
+          padding: EdgeInsets.zero,
           children: [
             const DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.red, // Latar belakang merah
+                color: Colors.red,
               ),
               child: Text(
-                'List Produk Toko Sufyan',
+                'Toko Sufyan',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 24,
-                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
             ListTile(
-              title: const Text(
-                'Logout',
-                style: TextStyle(color: Colors.white), // Teks putih
-              ),
-              trailing: const Icon(Icons.logout,
-                  color: Colors.white), // Ikon logout putih
+              title: const Text('Logout'),
+              trailing: const Icon(Icons.logout),
               onTap: () async {
-                // Tambahkan logika logout
+                await LogoutBloc.logout().then((value) => {
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                              builder: (context) => const LoginPage()),
+                          (route) => false)
+                    });
               },
             ),
           ],
         ),
       ),
-      body: Container(
-        color:
-            const Color.fromARGB(255, 255, 229, 180), // Warna emas khas Marvel
-        child: ListView(
-          children: [
-            ItemProduk(
-              produk: Produk(
-                  id: 1,
-                  kodeProduk: 'A001',
-                  namaProduk: 'Kamera',
-                  hargaProduk: 5000000),
-            ),
-            ItemProduk(
-              produk: Produk(
-                  id: 2,
-                  kodeProduk: 'A002',
-                  namaProduk: 'Kulkas',
-                  hargaProduk: 2500000),
-            ),
-            ItemProduk(
-              produk: Produk(
-                  id: 3,
-                  kodeProduk: 'A003',
-                  namaProduk: 'Mesin Cuci',
-                  hargaProduk: 2000000),
-            ),
-          ],
-        ),
+      body: FutureBuilder<List>(
+        future: ProdukBloc.getProduks(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            print(snapshot.error);
+          }
+          return snapshot.hasData
+              ? ListProduk(list: snapshot.data)
+              : const Center(
+                  child: CircularProgressIndicator(),
+                );
+        },
       ),
+    );
+  }
+}
+
+class ListProduk extends StatelessWidget {
+  final List? list;
+  const ListProduk({Key? key, this.list}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: list == null ? 0 : list!.length,
+      itemBuilder: (context, i) {
+        return ItemProduk(produk: list![i]);
+      },
     );
   }
 }
 
 class ItemProduk extends StatelessWidget {
   final Produk produk;
-
-  const ItemProduk({super.key, required this.produk});
+  const ItemProduk({Key? key, required this.produk}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -110,28 +106,52 @@ class ItemProduk extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ProdukDetail(
-              produk: produk,
-            ),
+            builder: (context) => ProdukDetail(produk: produk),
           ),
         );
       },
       child: Card(
-        color:
-            Colors.red[100], // Warna latar belakang kartu dengan nuansa merah
-        child: ListTile(
-          title: Text(
-            produk.namaProduk!,
-            style: const TextStyle(
-              color: Colors.red, // Teks merah khas Marvel
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          subtitle: Text(
-            produk.hargaProduk.toString(),
-            style: const TextStyle(
-              color: Colors.black, // Warna teks hitam untuk harga
-            ),
+        elevation: 5,
+        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Row(
+            children: [
+              Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                  color: Colors.red[100],
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                child:
+                    const Icon(Icons.shopping_bag, size: 40, color: Colors.red),
+              ),
+              const SizedBox(width: 20),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    produk.namaProduk!,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    "Rp ${produk.hargaProduk}",
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.red[700],
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),

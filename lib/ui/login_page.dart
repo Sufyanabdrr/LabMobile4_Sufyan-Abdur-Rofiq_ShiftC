@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:tokokita/bloc/login_bloc.dart';
+import 'package:tokokita/helpers/user_info.dart';
+import 'package:tokokita/ui/produk_page.dart';
 import 'package:tokokita/ui/registrasi_page.dart';
+import 'package:tokokita/widget/warning_dialog.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -10,64 +14,44 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
-  final bool _isLoading = false;
-
+  bool _isLoading = false;
   final _emailTextboxController = TextEditingController();
   final _passwordTextboxController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.red[50],
       appBar: AppBar(
-        backgroundColor: Colors.red[900], // Warna merah khas Marvel
-        title: const Text(
-          'Login Sufyan Abdur Rofiq || H1D022004',
-          style: TextStyle(color: Colors.white), // Teks putih
-        ),
-        centerTitle: false, // Tetap berada di kiri
+        title: const Text('Login Sufyan Abdur Rofiq | H1D022004'),
+        backgroundColor: Colors.red[700],
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          color: const Color.fromARGB(255, 255, 229, 180), // Warna emas Marvel
+      body: Center(
+        child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  const SizedBox(height: 20),
-                  const Text(
-                    "Selamat Datang di Toko Sufyan",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.red, // Teks dengan warna merah khas Marvel
-                    ),
+            padding: const EdgeInsets.all(16.0),
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              elevation: 8,
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      _emailTextField(),
+                      const SizedBox(height: 20),
+                      _passwordTextField(),
+                      const SizedBox(height: 30),
+                      _buttonLogin(),
+                      const SizedBox(height: 30),
+                      _menuRegistrasi(),
+                    ],
                   ),
-                  const SizedBox(height: 20),
-                  Image.network(
-                    'https://example.com/marvel_background.jpg', // URL gambar bertema Marvel
-                    height: 150,
-                    errorBuilder: (BuildContext context, Object exception,
-                        StackTrace? stackTrace) {
-                      return const Icon(
-                        Icons
-                            .error, // Menampilkan ikon error jika gagal memuat gambar
-                        size: 150,
-                        color: Colors.red,
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 20),
-                  _emailTextField(),
-                  _passwordTextField(),
-                  _buttonLogin(),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  _buttonRegistrasi(),
-                ],
+                ),
               ),
             ),
           ),
@@ -79,16 +63,12 @@ class _LoginPageState extends State<LoginPage> {
   // Membuat Textbox email
   Widget _emailTextField() {
     return TextFormField(
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         labelText: "Email",
-        labelStyle:
-            TextStyle(color: Colors.red), // Warna label merah khas Marvel
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.red), // Border merah saat fokus
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.black), // Border hitam default
-        ),
+        prefixIcon: Icon(Icons.email, color: Colors.red[700]),
       ),
       keyboardType: TextInputType.emailAddress,
       controller: _emailTextboxController,
@@ -104,17 +84,13 @@ class _LoginPageState extends State<LoginPage> {
   // Membuat Textbox password
   Widget _passwordTextField() {
     return TextFormField(
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         labelText: "Password",
-        labelStyle: TextStyle(color: Colors.red),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.red),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.black),
-        ),
+        prefixIcon: Icon(Icons.lock, color: Colors.red[700]),
       ),
-      keyboardType: TextInputType.text,
       obscureText: true,
       controller: _passwordTextboxController,
       validator: (value) {
@@ -128,53 +104,82 @@ class _LoginPageState extends State<LoginPage> {
 
   // Membuat Tombol Login
   Widget _buttonLogin() {
-    return Container(
-      margin: const EdgeInsets.only(left: 0, top: 15, right: 0, bottom: 5),
-      child: SizedBox(
-        width: 150,
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.red, // Warna merah khas Marvel
-            textStyle: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-            ),
-            padding: const EdgeInsets.symmetric(vertical: 20),
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.red[700],
+          padding: const EdgeInsets.symmetric(vertical: 15.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
           ),
-          child: const Text("Login"),
-          onPressed: () {
-            var validate = _formKey.currentState!.validate();
-          },
         ),
+        child: _isLoading
+            ? const CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              )
+            : const Text(
+                "Login",
+                style: TextStyle(fontSize: 18),
+              ),
+        onPressed: () {
+          var validate = _formKey.currentState!.validate();
+          if (validate) {
+            if (!_isLoading) _submit();
+          }
+        },
       ),
     );
   }
 
-  // Membuat Tombol Registrasi
-  Widget _buttonRegistrasi() {
-    return Container(
-      margin: const EdgeInsets.only(top: 20),
-      child: SizedBox(
-        width: 150,
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.black, // Warna hitam Marvel
-            textStyle: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-            ),
-            padding: const EdgeInsets.symmetric(vertical: 15),
-          ),
-          child: const Text("Registrasi"),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const RegistrasiPage()),
-            );
-          },
+  void _submit() {
+    _formKey.currentState!.save();
+    setState(() {
+      _isLoading = true;
+    });
+    LoginBloc.login(
+            email: _emailTextboxController.text,
+            password: _passwordTextboxController.text)
+        .then((value) async {
+      if (value.code == 200) {
+        await UserInfo().setToken(value.token.toString());
+        await UserInfo().setUserID(int.parse(value.userID.toString()));
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const ProdukPage()));
+      } else {
+        showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) => const WarningDialog(
+                  description: "Login gagal, silahkan coba lagi",
+                ));
+      }
+    }, onError: (error) {
+      print(error);
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) => const WarningDialog(
+                description: "Login gagal, silahkan coba lagi",
+              ));
+    });
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
+  // Membuat menu untuk membuka halaman registrasi
+  Widget _menuRegistrasi() {
+    return Center(
+      child: InkWell(
+        child: const Text(
+          "Registrasi",
+          style: TextStyle(color: Colors.red),
         ),
+        onTap: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const RegistrasiPage()));
+        },
       ),
     );
   }

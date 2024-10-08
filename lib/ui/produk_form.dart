@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:tokokita/bloc/produk_bloc.dart';
 import 'package:tokokita/model/produk.dart';
+import 'package:tokokita/ui/produk_page.dart';
+import 'package:tokokita/widget/warning_dialog.dart';
 
+// ignore: must_be_immutable
 class ProdukForm extends StatefulWidget {
   Produk? produk;
-
-  ProdukForm({super.key, this.produk});
-
+  ProdukForm({Key? key, this.produk}) : super(key: key);
   @override
   _ProdukFormState createState() => _ProdukFormState();
 }
 
 class _ProdukFormState extends State<ProdukForm> {
   final _formKey = GlobalKey<FormState>();
-  final bool _isLoading = false;
-  String judul = "Tambah Produk Sufyan Abdur Rofiq || H1D022004";
-  String tombolSubmit = "Simpan";
-
+  bool _isLoading = false;
+  String judul = "TAMBAH PRODUK SUFYAN ABDUR ROFIQ | H1D022004";
+  String tombolSubmit = "SIMPAN";
   final _kodeProdukTextboxController = TextEditingController();
   final _namaProdukTextboxController = TextEditingController();
   final _hargaProdukTextboxController = TextEditingController();
@@ -29,7 +30,7 @@ class _ProdukFormState extends State<ProdukForm> {
   isUpdate() {
     if (widget.produk != null) {
       setState(() {
-        judul = "Ubah Produk Sufyan Abdur Rofiq || H1D022004 ";
+        judul = "UBAH PRODUK SUFYAN ABDUR ROFIQ | H1D022004";
         tombolSubmit = "UBAH";
         _kodeProdukTextboxController.text = widget.produk!.kodeProduk!;
         _namaProdukTextboxController.text = widget.produk!.namaProduk!;
@@ -37,8 +38,8 @@ class _ProdukFormState extends State<ProdukForm> {
             widget.produk!.hargaProduk.toString();
       });
     } else {
-      judul = "Ubah Produk Sufyan Abdur Rofiq || H1D022004";
-      tombolSubmit = "Simpan";
+      judul = "TAMBAH PRODUK SUFYAN ABDUR ROFIQ | H1D022004";
+      tombolSubmit = "SIMPAN";
     }
   }
 
@@ -46,42 +47,24 @@ class _ProdukFormState extends State<ProdukForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.red[900], // Warna merah khas Marvel
-        title: Text(
-          judul,
-          style: const TextStyle(color: Colors.white), // Teks putih
-        ),
+        title: Text(judul),
+        backgroundColor: Colors.red[700],
       ),
-      body: Container(
-        color:
-            const Color.fromARGB(255, 255, 229, 180), // Warna emas khas Marvel
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  // Menambahkan Judul
-                  const Text(
-                    "Ubah Produk di Toko Sufyan",
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.red, // Warna teks merah khas Marvel
-                    ),
-                    textAlign: TextAlign.center, // Rata tengah
-                  ),
-                  const SizedBox(height: 20), // Jarak antara judul dan textbox
-                  _kodeProdukTextField(),
-                  const SizedBox(height: 10), // Jarak antara field
-                  _namaProdukTextField(),
-                  const SizedBox(height: 10), // Jarak antara field
-                  _hargaProdukTextField(),
-                  const SizedBox(height: 20), // Jarak sebelum tombol
-                  _buttonSubmit(),
-                ],
-              ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                _kodeProdukTextField(),
+                const SizedBox(height: 16),
+                _namaProdukTextField(),
+                const SizedBox(height: 16),
+                _hargaProdukTextField(),
+                const SizedBox(height: 24),
+                _buttonSubmit()
+              ],
             ),
           ),
         ),
@@ -89,20 +72,12 @@ class _ProdukFormState extends State<ProdukForm> {
     );
   }
 
-  // Membuat Textbox Kode Produk dengan tema Marvel
+  // Membuat Textbox Kode Produk
   Widget _kodeProdukTextField() {
     return TextFormField(
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         labelText: "Kode Produk",
-        labelStyle: TextStyle(color: Colors.red), // Label merah khas Marvel
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-              color: Colors.red, width: 2.0), // Border merah saat fokus
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderSide:
-              BorderSide(color: Colors.black), // Border hitam saat tidak fokus
-        ),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),
       keyboardType: TextInputType.text,
       controller: _kodeProdukTextboxController,
@@ -115,20 +90,12 @@ class _ProdukFormState extends State<ProdukForm> {
     );
   }
 
-  // Membuat Textbox Nama Produk dengan tema Marvel
+  // Membuat Textbox Nama Produk
   Widget _namaProdukTextField() {
     return TextFormField(
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         labelText: "Nama Produk",
-        labelStyle: TextStyle(color: Colors.red), // Label merah khas Marvel
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-              color: Colors.red, width: 2.0), // Border merah saat fokus
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderSide:
-              BorderSide(color: Colors.black), // Border hitam saat tidak fokus
-        ),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),
       keyboardType: TextInputType.text,
       controller: _namaProdukTextboxController,
@@ -141,20 +108,12 @@ class _ProdukFormState extends State<ProdukForm> {
     );
   }
 
-  // Membuat Textbox Harga Produk dengan tema Marvel
+  // Membuat Textbox Harga Produk
   Widget _hargaProdukTextField() {
     return TextFormField(
-      decoration: const InputDecoration(
-        labelText: "Harga Produk",
-        labelStyle: TextStyle(color: Colors.red), // Label merah khas Marvel
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-              color: Colors.red, width: 2.0), // Border merah saat fokus
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderSide:
-              BorderSide(color: Colors.black), // Border hitam saat tidak fokus
-        ),
+      decoration: InputDecoration(
+        labelText: "Harga",
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),
       keyboardType: TextInputType.number,
       controller: _hargaProdukTextboxController,
@@ -167,27 +126,87 @@ class _ProdukFormState extends State<ProdukForm> {
     );
   }
 
-  // Membuat Tombol Simpan/Ubah dengan tema Marvel
+  // Membuat Tombol Simpan/Ubah
   Widget _buttonSubmit() {
-    return OutlinedButton(
-      style: OutlinedButton.styleFrom(
-        backgroundColor: Colors.red[900], // Warna tombol merah khas Marvel
-        padding: const EdgeInsets.symmetric(
-            horizontal: 20, vertical: 12), // Atur margin sesuai kebutuhan
-      ),
-      child: Text(
-        tombolSubmit,
-        style: const TextStyle(
-          color: Colors.white, // Warna teks putih
-          fontWeight: FontWeight.bold,
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          padding: const EdgeInsets.all(16),
+          backgroundColor: Colors.red[700],
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         ),
+        child: _isLoading
+            ? const CircularProgressIndicator(color: Colors.white)
+            : Text(tombolSubmit, style: const TextStyle(fontSize: 16)),
+        onPressed: () {
+          var validate = _formKey.currentState!.validate();
+          if (validate && !_isLoading) {
+            if (widget.produk != null) {
+              ubah();
+            } else {
+              simpan();
+            }
+          }
+        },
       ),
-      onPressed: () {
-        var validate = _formKey.currentState!.validate();
-        if (validate) {
-          // Logika penyimpanan produk di sini
-        }
-      },
     );
+  }
+
+  // Fungsi Simpan Produk Baru
+  void simpan() {
+    setState(() {
+      _isLoading = true;
+    });
+    Produk createProduk = Produk(id: null);
+    createProduk.kodeProduk = _kodeProdukTextboxController.text;
+    createProduk.namaProduk = _namaProdukTextboxController.text;
+    createProduk.hargaProduk = int.parse(_hargaProdukTextboxController.text);
+
+    ProdukBloc.addProduk(produk: createProduk).then((value) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const ProdukPage()),
+      );
+    }).catchError((error) {
+      showDialog(
+        context: context,
+        builder: (context) => const WarningDialog(
+          description: "Simpan gagal, silahkan coba lagi",
+        ),
+      );
+    }).whenComplete(() {
+      setState(() {
+        _isLoading = false;
+      });
+    });
+  }
+
+  // Fungsi Ubah Produk
+  void ubah() {
+    setState(() {
+      _isLoading = true;
+    });
+    Produk updateProduk = Produk(id: widget.produk!.id!);
+    updateProduk.kodeProduk = _kodeProdukTextboxController.text;
+    updateProduk.namaProduk = _namaProdukTextboxController.text;
+    updateProduk.hargaProduk = int.parse(_hargaProdukTextboxController.text);
+
+    ProdukBloc.updateProduk(produk: updateProduk).then((value) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const ProdukPage()),
+      );
+    }).catchError((error) {
+      showDialog(
+        context: context,
+        builder: (context) => const WarningDialog(
+          description: "Permintaan ubah data gagal, silahkan coba lagi",
+        ),
+      );
+    }).whenComplete(() {
+      setState(() {
+        _isLoading = false;
+      });
+    });
   }
 }
